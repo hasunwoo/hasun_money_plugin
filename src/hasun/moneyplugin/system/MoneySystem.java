@@ -99,7 +99,7 @@ public class MoneySystem {
         return false;
     }
 
-    //돈을 환전합니다. 타겟티어가 될때까지 돈을 하위티어로 쪼갭니다.
+    //돈을 환전합니다. 타겟티어가 될때까지 돈을 하위티어로 쪼갭니다
     private static boolean exchangeMoneyInternal(Player player, BigInteger amount) {
         Map<Integer, Integer> split = MoneyUnitConversion.convertToMoneyUnit(amount, MoneyUnitConversion.KOREA_UNIT);
         for (Integer targetTier : split.keySet()) {
