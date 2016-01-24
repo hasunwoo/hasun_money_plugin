@@ -104,21 +104,28 @@ public class MoneySystem {
         Map<Integer, Integer> split = MoneyUnitConversion.convertToMoneyUnit(amount, MoneyUnitConversion.KOREA_UNIT);
         for (Integer targetTier : split.keySet()) {
             if (split.get(targetTier) == 0) continue;
+            //현재 돈의 티어를 타겟티어로 설정합니다
             int currentTier = targetTier;
             while (true) {
-                //티어를 한단계씩 높임니다
-                if (getMoneyCount(player, currentTier) <= 0) {
+                //만약 플레이어가 가지고 있는 현재 티어의 돈이 없으면 티어를 한단계씩 높임니다
+                if (getMoneyCount(player, currentTier) == 0) {
                     currentTier = getNextTier(currentTier);
+                    //만약 최상위 티어까지 탐색해도 못찾으면 false 를 리턴합니다
+                    if (currentTier == -1) return false;
                     continue;
+                }
+                break;
+            }
+            //타겟티어에 도달할 때 까지 하위티어로 쪼갭니다
+            while (targetTier != currentTier) {
+                //만약 돈을 쪼개는데 성공하면 현재 티어를 하나 낮춤니다
+                if (splitToLowerTier(player, currentTier)) {
+                    currentTier = getPreviousTier(currentTier);
                 } else {
-                    //돈을 하위티어로 쪼갭니다
-                    while (targetTier != currentTier) {
-                        splitToLowerTier(player, currentTier);
-                        currentTier = getPreviousTier(currentTier);
-                    }
-                    break;
+                    return false;
                 }
             }
+            break;
         }
         return true;
     }
