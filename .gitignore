@@ -8,5 +8,10 @@
 *.war
 *.ear
 
+# Custom Files #
+bukkit-1.7.10-R0.1-20140817.175650-8.jar
+out/
+idea/
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

@@ -1,0 +1,29 @@
+# General Data
+name: HasunRealMoney
+main: hasun.moneyplugin.MoneyPlugin
+version: 1.0
+
+# Command
+commands:
+   takeMoney:
+      description: test command.
+      usage: /takeMoney
+
+# Generator Data
+generators: [bukget]
+categories: [ECON]
+description: implementation of modMoney by hasun.
+maintainer: hasunwoo
+authors: [hasunwoo]
+location: ""
+conflicts: []
+required: []
+optional: [Permissions]
+engine:
+    craftbukkit:
+        min: 0
+        max: 1100
+    glowstone:
+        min: 1
+        max: 100
+
