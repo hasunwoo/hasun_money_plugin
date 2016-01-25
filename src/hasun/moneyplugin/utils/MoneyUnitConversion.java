@@ -7,6 +7,7 @@ import java.util.Map;
 public class MoneyUnitConversion {
     public static final int[] KOREA_UNIT = {10000, 5000, 1000, 500, 100, 10, 1};
 
+    //ex) 5601 -> {(10000,0),(5000,1),(1000,0),(500,1),(100,1),(10,0),(1,1)}
     public static Map<Integer, Integer> convertToMoneyUnit(BigInteger amount, final int[] units) {
         BigInteger a = amount;
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();

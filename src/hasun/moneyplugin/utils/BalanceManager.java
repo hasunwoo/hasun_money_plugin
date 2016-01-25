@@ -12,9 +12,12 @@ import java.math.BigInteger;
 
 public class BalanceManager {
     public static BigInteger countMoney(Player player) {
+        return countMoney(player.getInventory());
+    }
+
+    public static BigInteger countMoney(Inventory inv) {
         BigInteger balance = BigInteger.ZERO;
-        if (player != null) {
-            Inventory inv = player.getInventory();
+        if (inv != null) {
             for (ItemStack stack : inv) {
                 if (stack != null) {
                     //돈일때 처리

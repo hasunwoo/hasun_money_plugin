@@ -1,6 +1,7 @@
 package hasun.moneyplugin;
 
 import hasun.moneyplugin.system.MoneySystem;
+import hasun.moneyplugin.utils.BalanceManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,8 +26,9 @@ public class MoneyPlugin extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equals("takeMoney")) {
-            boolean success = MoneySystem.withdraw((Player) sender, Integer.parseInt(args[0]));
-            sender.sendMessage(Boolean.toString(success));
+            MoneySystem.withdraw((Player) sender, Integer.parseInt(args[0]));
+        } else if (command.getName().equals("balance")) {
+            sender.sendMessage("돈: " + BalanceManager.countMoney((Player) sender));
         }
         return false;
     }

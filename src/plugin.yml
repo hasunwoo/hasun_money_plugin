@@ -8,9 +8,12 @@ commands:
    takeMoney:
       description: test command.
       usage: /takeMoney
+   balance:
+      description: test command.
+      usage: /balance
 
 # Generator Data
-generators: [bukget]
+generators: []
 categories: [ECON]
 description: implementation of modMoney by hasun.
 maintainer: hasunwoo
