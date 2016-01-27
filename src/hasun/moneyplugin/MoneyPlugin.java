@@ -25,6 +25,7 @@ public class MoneyPlugin extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        System.out.println("Testing ...");
         if (command.getName().equals("takeMoney")) {
             MoneySystem.withdraw((Player) sender, Integer.parseInt(args[0]));
         } else if (command.getName().equals("balance")) {

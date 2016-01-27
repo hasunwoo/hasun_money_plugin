@@ -3,16 +3,18 @@ package hasun.moneyplugin.system;
 import hasun.moneyplugin.utils.BalanceManager;
 import hasun.moneyplugin.utils.BigIntegerUtil;
 import hasun.moneyplugin.utils.MoneyUnitConversion;
-import hasun.moneyplugin.utils.VirtualPlayerInventory;
+import hasun.moneyplugin.utils.SimpleVirtualInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MoneySystem {
@@ -40,7 +42,7 @@ public class MoneySystem {
             player.sendMessage("돈이 부족합니다");
             return false;
         }
-        VirtualPlayerInventory inv = new VirtualPlayerInventory(player);
+        SimpleVirtualInventory inv = new SimpleVirtualInventory(player.getInventory());
         BigInteger estimate = BalanceManager.countMoney(inv).subtract(a);
         takeMoney(inv, a);
         if (inv.overflowCount > 0) {
@@ -79,8 +81,8 @@ public class MoneySystem {
         takeMoney(inv, left);
     }
 
-    private static boolean commitInventory(final VirtualPlayerInventory inventory, final BigInteger estimate) {
-        return inventory.commit(new VirtualPlayerInventory.InventoryChecker() {
+    private static boolean commitInventory(final SimpleVirtualInventory inventory, final BigInteger estimate) {
+        return inventory.commit(new SimpleVirtualInventory.InventoryChecker() {
             @Override
             public boolean checkInventory(Map<Integer, ItemStack> clone, Inventory original) {
                 BigInteger a = BalanceManager.countMoney(inventory);
@@ -106,7 +108,8 @@ public class MoneySystem {
         for (int j = 0; j < inv.getSize(); j++) {
             ItemStack i = inv.getItem(j);
             if (i != null && i.getType().toString().equals("MONEY_HASUN_MONEY_HASUNITEMMONEY") && i.getDurability() == unit) {
-                if (taken == unit) return true;
+                //돈을 다 가져갔으면 리턴한다
+                if (taken == amount) return true;
                 if (i.getAmount() >= amount) {
                     taken += amount;
                     i.setAmount(i.getAmount() - amount);
@@ -160,6 +163,7 @@ public class MoneySystem {
         Arrays.sort(arr);
         for (int i = 0; i < MoneyUnitConversion.KOREA_UNIT.length; i++) {
             if (MoneyUnitConversion.KOREA_UNIT[i] == a) {
+                if(i-1 > arr.length) break;
                 return MoneyUnitConversion.KOREA_UNIT[i + 1];
             }
         }
@@ -173,6 +177,7 @@ public class MoneySystem {
         Arrays.sort(arr);
         for (int i = 0; i < MoneyUnitConversion.KOREA_UNIT.length; i++) {
             if (MoneyUnitConversion.KOREA_UNIT[i] == a) {
+                if(i < 1) break;
                 return MoneyUnitConversion.KOREA_UNIT[i - 1];
             }
         }
